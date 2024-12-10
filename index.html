@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Active Aura</title>
+    <link rel="stylesheet" href="style.css">
+    <script>
+        function showBmrOption(event) {
+            event.preventDefault(); // Prevent form submission
+            const bmrOption = document.getElementById('bmr-option');
+            bmrOption.style.display = 'block'; // Show the BMR calculation option
+        }
+    </script>
+</head>
+<body>
+    <h1>Welcome to <span style="color: #3498db;">Active </span style="color: skyblue;">Aura</h1>
+    <div class="container">
+        <h2>Sign Up</h2>
+        <form onsubmit="showBmrOption(event)">
+            <div class="form-group">
+                <label for="name">Full Name</label>
+                <input type="text" id="name" name="name" placeholder="Enter your name" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="Enter your email" required>
+            </div>
+            <div class="form-group">
+                <label for="contact">Contact Number</label>
+                <input type="tel" id="contact" name="contact" placeholder="Enter your contact number" required>
+            </div>
+            <button type="submit" class="submit-btn">Sign Up</button>
+        </form>
+        <div id="bmr-option" style="display: none; margin-top: 20px;">
+            <p>Thank you for signing up! Would you like to calculate your BMR?</p>
+            <a href="bmr.html" class="submit-btn" style="text-decoration: none; display: inline-block; text-align: center;">Calculate BMR</a>
+        </div>
+    </div>
+</body>
+</html>

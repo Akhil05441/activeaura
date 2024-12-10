@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculate BMR</title>
+    <link rel="stylesheet" href="style.css">
+    <script>
+        function calculateBMR(event) {
+            event.preventDefault(); // Prevent form submission
+            
+            // Retrieve input values
+            const age = parseInt(document.getElementById('age').value);
+            const weight = parseFloat(document.getElementById('weight').value);
+            const height = parseFloat(document.getElementById('height').value);
+            const gender = document.getElementById('gender').value;
+
+            // Validate inputs
+            if (isNaN(age) || isNaN(weight) || isNaN(height) || age <= 0 || weight <= 0 || height <= 0) {
+                document.getElementById('bmr-result').innerHTML = 
+                    "<p style='color: red;'>Please enter valid values for all fields.</p>";
+                return;
+            }
+
+            // BMR calculation formula
+            let bmr;
+            if (gender === "male") {
+                bmr = 88.36 + (13.4 * weight) + (4.8 * height) - (5.7 * age);
+            } else if (gender === "female") {
+                bmr = 447.6 + (9.2 * weight) + (3.1 * height) - (4.3 * age);
+            }
+
+            // BMI calculation
+            const heightInMeters = height / 100;
+            const bmi = weight / (heightInMeters * heightInMeters);
+            let bmiCategory = '';
+            let dietPlan = '';
+
+            // BMI Categories
+            if (bmi < 18.5) {
+                bmiCategory = "Underweight";
+                dietPlan = "High-calorie meals with more protein and carbs.";
+            } else if (bmi >= 18.5 && bmi < 24.9) {
+                bmiCategory = "Normal weight";
+                dietPlan = "Balanced diet with a mix of proteins, carbs, and healthy fats.";
+            } else if (bmi >= 25 && bmi < 29.9) {
+                bmiCategory = "Overweight";
+                dietPlan = "Moderate calorie intake with focus on vegetables, lean proteins, and whole grains.";
+            } else {
+                bmiCategory = "Obese";
+                dietPlan = "Calorie-restricted diet with emphasis on vegetables, fruits, and lean proteins.";
+            }
+
+            // Display result
+            document.getElementById('bmr-result').innerHTML = `
+                <div style="background-color: black; border: 1px solid #ccc; padding: 15px; border-radius: 5px; margin-top: 20px;">
+                    <h3>Your BMR Result</h3>
+                    <p>Your Basal Metabolic Rate (BMR) is: 
+                    <strong>${bmr.toFixed(2)} calories/day</strong>.</p>
+                </div>
+                <div style="background-color: #333; color: #fff; padding: 15px; border-radius: 5px; margin-top: 20px;">
+                    <h3>Your BMI Category</h3>
+                    <p>Your BMI is: <strong>${bmi.toFixed(2)}</strong> (Category: <strong>${bmiCategory}</strong>)</p>
+                </div>
+                <div style="background-color: #222; color: #fff; padding: 15px; border-radius: 5px; margin-top: 20px;">
+                    <h3>Recommended Diet</h3>
+                    <p>${dietPlan}</p>
+                </div>
+            `;
+        }
+    </script>
+</head>
+<body>
+    <h1>Calculate Your BMR</h1>
+    <div class="container">
+        <form onsubmit="calculateBMR(event)">
+            <div class="form-group">
+                <label for="age">Age</label>
+                <input type="number" id="age" name="age" placeholder="Enter your age" required>
+            </div>
+            <div class="form-group">
+                <label for="weight">Weight (kg)</label>
+                <input type="number" id="weight" name="weight" placeholder="Enter your weight" required>
+            </div>
+            <div class="form-group">
+                <label for="height">Height (cm)</label>
+                <input type="number" id="height" name="height" placeholder="Enter your height" required>
+            </div>
+            <div class="form-group">
+                <label for="gender">Gender</label>
+                <select id="gender" name="gender" required>
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                </select>
+            </div>
+            <button type="submit" class="submit-btn">Calculate BMR</button>
+        </form>
+        <!-- Result box -->
+        <div id="bmr-result"></div>
+    </div>
+</body>
+</html>
